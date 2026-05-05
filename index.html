@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sales Prediction</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.container{
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.2);
+    text-align:center;
+    width:350px;
+}
+
+input{
+    width:90%;
+    padding:10px;
+    margin:10px 0;
+    border-radius:6px;
+    border:1px solid #ccc;
+}
+
+button{
+    background:#007bff;
+    color:white;
+    padding:10px 20px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#0056b3;
+}
+
+.result{
+    margin-top:15px;
+    font-size:18px;
+    font-weight:bold;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Sales Prediction</h2>
+
+<input type="number" id="budget" placeholder="Enter Advertising Budget">
+
+<button onclick="predictSales()">Predict</button>
+
+<div class="result" id="result"></div>
+
+</div>
+
+
+<script>
+
+async function predictSales(){
+
+    const budget = document.getElementById("budget").value;
+
+    try {
+
+        const response = await fetch("https://project-tv8v.onrender.com/predict", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                advertising_budget: Number(budget)
+            })
+        });
+
+        const data = await response.json();
+
+        document.getElementById("result").innerHTML =
+            "Predicted Sales: " + data.predicted_sales;
+
+    } catch(error) {
+        console.error(error);
+        document.getElementById("result").innerHTML =
+            "Error connecting to API";
+    }
+}
+</script>
+
+</body>
+</html>
