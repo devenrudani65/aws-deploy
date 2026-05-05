@@ -5,7 +5,7 @@ from joblib import load
 from fastapi.middleware.cors import CORSMiddleware
 
 
-model = load(r"mock_api.joblib")
+model = load(r"app.joblib")
 
 app = FastAPI()
 
